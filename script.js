@@ -58,13 +58,31 @@ const emailError = emailInput.nextElementSibling;
 
 emailInput.addEventListener('input', () => {
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailPattern.test(emailInput.value)) {
+  const emailValue = emailInput.value.trim();  // Trims any leading/trailing spaces
+
+  if (emailValue === '') {
+    // Case when the input is empty
+    emailError.textContent = 'Email is required.';
     emailError.style.display = 'block';
     emailInput.style.borderColor = 'red';
-    errorMessageContainer.style.fontSize = 'smaller';
+  } else if (!emailPattern.test(emailValue)) {
+    // Case when the input doesn't match the pattern
+    emailError.textContent = 'Please enter a valid email address.';
+    emailError.style.display = 'block';
+    emailInput.style.borderColor = 'red';
   } else {
+    // Valid email
+    emailError.style.display = 'none';  
     emailInput.style.borderColor = 'green';
-    errorMessageContainer.textContent = '';
   }
+});
+
+
+//==============Submission Success================
+const form = document.getElementsByClassName("billing-box");
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  alert('Form successfully submitted!');
+  form.reset(); 
 });
 
